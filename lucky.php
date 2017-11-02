@@ -37,7 +37,9 @@ for($i = 0; $i < 1000000; ++$i) {
         $right = $left + $sample - 1;
     }
 }
-$result[] = array('left' => $left, 'right' => 999999, 'count' => $count);  //adding the last tickets out of sample
+if($left <= 999999) {
+    $result[] = ['left' => $left, 'right' => 999999, 'count' => $count];  //adding the last tickets out of sample
+}
 
 foreach ($result as $value) {
     $percent = 100 * $value['count'] / $max;
@@ -49,7 +51,7 @@ foreach ($result as $value) {
 ?>
 <br>
 <embed type="image/svg+xml">
-    <?php echo '<?xml version="1.0 encoding="UTF-8"?>'; ?>
+    <?= '<?xml version="1.0 encoding="UTF-8"?>'; ?>
     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="<?=($width * count($result) + 20)?>" height="<?=$height?>">
         <?php
         //generating SVG
@@ -57,7 +59,7 @@ foreach ($result as $value) {
         foreach ($result as $value) {
             $h = (int)($height * $value['count'] / $max);  //relative height of column
             $y = $height - $h;
-            echo "<rect x=\"$x\" y=\"$y\" width=\"$width\" height=\"$h\" fill=\"teal\"/>"; //drawing column
+            echo "<rect x=\"$x\" y=\"$y\" width=\"$width\" height=\"$h\" fill=\"teal\"/>" . PHP_EOL; //drawing column
             $x += $width; //moving to next column
         }
 
